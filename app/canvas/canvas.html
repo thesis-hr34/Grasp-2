@@ -16,24 +16,24 @@
     <div ng-prevent-drag="true" ng-repeat="codeBlock in droppedCodeBlocks track by $index" ng-drag="true" ng-drag-data="codeBlock" ng-switch="codeBlock.type">
 
       <!-- VARIABLE CODE BLOCK -->
-      <div ng-switch-when="variable" class="codeBlockDropped" ng-model="codeBlock" name="codeBlock" ng-drag-data="codeBlock" ng-drag="true" ng-drag-success="onDragFromCanvas()">
+      <div ng-switch-when="variable" class="codeBlockDropped" ng-model="codeBlock" name="codeBlock" ng-drag-data="codeBlock" ng-drag="isCodeBlockDraggable" ng-drag-success="onDragFromCanvas()">
 
         <!-- CODE BLOCK NAME -->
-        <div id="variableName" ng-click="showNameForm = showNameForm ? false : true">
+        <div id="variableName" ng-click="showNameForm = showNameForm ? false : true; turnOnDrag()">
           {{codeBlock.name}}
         </div>
 
-        <div id="variableValue" ng-click="showValueForm = showValueForm ? false : true">
+        <div id="variableValue" ng-click="showValueForm = showValueForm ? false : true; turnOnDrag()">
           {{codeBlock.value}}
         </div>
 
         <!-- CODEBLOCK NAME FORM -->
         <form ng-if="showNameForm" ng-submit="setVariable(codeBlock, name, val, $event)">
-          <input placeholder="Enter name..." ng-model="name" name="name" id="name" type="text">
+          <input placeholder="Enter name..." ng-model="name" name="name" id="name" type="text" ng-click="turnOffDrag()">
         </form>
 
         <form ng-if="showValueForm" ng-submit="setVariable(codeBlock, name, val, $event)">
-          <input placeholder="Enter value..." ng-model="val" name="val" id="val" type="text">
+          <input placeholder="Enter value..." ng-model="val" name="val" id="val" type="text" ng-click="turnOffDrag()">
         </form>
       </div>
 
