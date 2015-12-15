@@ -24,7 +24,6 @@ angular.module('Grasp.Canvas', ['ngDraggable', 'ngRoute'])
           } else {
             arguments += array[i].parameters[j] + ",";
           }
-          
         }
         code += "var " + array[i].name + " = function(" + arguments + ") {\n" + array[i].value + "\n};\n";
       }
@@ -86,6 +85,10 @@ angular.module('Grasp.Canvas', ['ngDraggable', 'ngRoute'])
       pop: function () {
         this.value.pop();
         $scope.code = generateCode($scope.droppedCodeBlocks);
+      },
+      indexOf: function () {
+        var valTofind = prompt("Enter the value you wish to find.");
+        alert(this.value.indexOf(valTofind));
       }
     },
     {
@@ -136,7 +139,6 @@ angular.module('Grasp.Canvas', ['ngDraggable', 'ngRoute'])
         for(var i = 0; i < this.parameters.length; i++) {
           total += Number(this.parameters[i]);
         }
-        console.log("in here")
         alert(total)
       }
     }

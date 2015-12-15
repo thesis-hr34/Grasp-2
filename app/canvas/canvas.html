@@ -46,6 +46,7 @@
         <div id="variableValue" ng-click="showValueForm = showValueForm ? false : true">
           {{codeBlock.value}}
         </div><div id="popArray" ng-click="codeBlock.pop()">Pop!</div>
+        <div id="popArray" ng-click="codeBlock.indexOf()">indexOf</div>
       </div>
 
         <!-- OBJECT CODE BLOCK -->
@@ -71,7 +72,7 @@
         </div>
 
         <!-- FUNCTION CODE BLOCK -->
-        <div ng-switch-when="function" ng-drag="isCodeBlockDraggable" ng-drop="isCodeBlockDraggable" ng-drop-success="codeBlock.addParam($data)" ng-model="codeBlock" name="codeBlock"  ng-drag-data="codeBlock" class="codeBlockDropped" ng-drag-success="onDragFromCanvas()">
+        <div ng-switch-when="add()" ng-drag="isCodeBlockDraggable" ng-drop="isCodeBlockDraggable" ng-drop-success="codeBlock.addParam($data)" ng-model="codeBlock" name="codeBlock"  ng-drag-data="codeBlock" class="codeBlockDropped" ng-drag-success="onDragFromCanvas()">
           <div id="objectName">{{codeBlock.name}}</div> function (
           <span ng-repeat="param in codeBlock.parameters track by $index">
             {{param}},
@@ -80,8 +81,6 @@
           <div><pre>{{codeBlock.definition}}</pre></div>
           <span ng-click="codeBlock.executeAdd()">Run function!</span>
         </div>
-
-      </div>
 
       <div><img ng-drop="true" ng-drop-success="deleteCodeblock($data)"src="../images/trash.png" id="trashbin"></div>
 
