@@ -1,5 +1,9 @@
 <div class="container-fluid">
 
+  <form>
+  <input type="submit" ng-click="runCode()">RUN CODE</input>
+  </form>
+
   <!-- TOOLBOX -->
   <div class="toolbox">
     <span ng-repeat="codeBlock in codeBlocks">
@@ -70,20 +74,31 @@
           </form>
         </div>
 
-        <!-- FUNCTION CODE BLOCK -->
-        <div ng-switch-when="function" ng-drag="isCodeBlockDraggable" ng-drop="isCodeBlockDraggable" ng-drop-success="codeBlock.addParam($data)" ng-model="codeBlock" name="codeBlock"  ng-drag-data="codeBlock" class="codeBlockDropped" ng-drag-success="onDragFromCanvas()">
-          <div id="objectName">{{codeBlock.name}}</div> function (
-          <span ng-repeat="param in codeBlock.parameters track by $index">
-            {{param}},
-          </span>
+        <!-- ADD METHOD CODE BLOCK -->
+        <div ng-switch-when="add()" ng-drag="isCodeBlockDraggable" ng-drop="isCodeBlockDraggable" ng-drop-success="codeBlock.addParam($data)" ng-model="codeBlock" name="codeBlock"  ng-drag-data="codeBlock" class="codeBlockDropped" ng-drag-success="onDragFromCanvas()">
+          <div id="objectName" ng-click="showDefinition = showDefinition ? false : true">{{codeBlock.name}}</div> function (
+          {{codeBlock.parameters.join(", ")}}
           )
-          <div><pre>{{codeBlock.definition}}</pre></div>
-          <span ng-click="codeBlock.executeAdd()">Run function!</span>
+          <div ng-if="showDefinition">
+            <div><pre>{{codeBlock.definition}}</pre></div>
+            <span ng-click="codeBlock.execute()">Run function!</span>
+          </div>
+        </div>
+
+        <!-- SUBTRACT METHOD CODE BLOCK -->
+        <div ng-switch-when="subtract()" ng-drag="isCodeBlockDraggable" ng-drop="isCodeBlockDraggable" ng-drop-success="codeBlock.addParam($data)" ng-model="codeBlock" name="codeBlock"  ng-drag-data="codeBlock" class="codeBlockDropped" ng-drag-success="onDragFromCanvas()">
+          <div id="objectName" ng-click="showDefinition = showDefinition ? false : true">{{codeBlock.name}}</div> function (
+          {{codeBlock.parameters.join(", ")}}
+          )
+          <div ng-if="showDefinition">
+            <div><pre>{{codeBlock.definition}}</pre></div>
+            <span ng-click="codeBlock.execute()">Run function!</span>
+          </div>
         </div>
 
       </div>
 
-      <div><img ng-drop="true" ng-drop-success="deleteCodeblock($data)"src="../images/trash.png" id="trashbin"></div>
+      <div><img ng-click="emptyCanvas()" ng-drop="true" ng-drop-success="deleteCodeblock($data)"src="../images/trash.png" id="trashbin"></div>
 
       </div>
 

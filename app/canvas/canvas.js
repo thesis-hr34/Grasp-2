@@ -4,6 +4,12 @@ angular.module('Grasp.Canvas', ['ngDraggable', 'ngRoute'])
   $scope.code = "";
   $scope.isCanvasDraggable=true;
   $scope.isCodeBlockDraggable=true;
+
+  $scope.runCode = function() {
+    var codeStr = $scope.code.split('\n').join("");
+    eval(codeStr);
+  }
+
   // generates code from droppedCodeBlocks
   generateCode = function(array) {
     // generate code from the array of codeBlocks received
@@ -16,7 +22,7 @@ angular.module('Grasp.Canvas', ['ngDraggable', 'ngRoute'])
       } else if (array[i].type === "object") {
         code+= "var " + array[i].name + " = " + JSON.stringify(array[i].storage) + "\n";
         // code += "var " + array[i].name + " = {" + array[i].key + ":"+ JSON.stringify(array[i].value) + "};\n";
-      } else if (array[i].type === "function") {
+      } else if (array[i].type === "add()") {
         var arguments = "";
         for (var j = 0; j < array[i].parameters.length; j++) {
           if (j === array[i].parameters.length-1) {
@@ -26,7 +32,18 @@ angular.module('Grasp.Canvas', ['ngDraggable', 'ngRoute'])
           }
           
         }
-        code += "var " + array[i].name + " = function(" + arguments + ") {\n" + array[i].value + "\n};\n";
+        code += "var " + array[i].name + " = function(" + arguments + ") {\n" + array[i].definition + "\n};\n";
+      } else if (array[i].type === "subtract()") {
+        var arguments = "";
+        for (var j = 0; j < array[i].parameters.length; j++) {
+          if (j === array[i].parameters.length-1) {
+            arguments += array[i].parameters[j];
+          } else {
+            arguments += array[i].parameters[j] + ",";
+          }
+          
+        }
+        code += "var " + array[i].name + " = function(" + arguments + ") {\n" + array[i].definition + "\n};\n";
       }
     }
 
@@ -131,16 +148,72 @@ angular.module('Grasp.Canvas', ['ngDraggable', 'ngRoute'])
         this.parameters.push(data.value);
         $scope.code = generateCode($scope.droppedCodeBlocks);
       },
-      executeAdd: function () {
+      execute: function () {
         var total = 0;
         for(var i = 0; i < this.parameters.length; i++) {
           total += Number(this.parameters[i]);
         }
-        console.log("in here")
+        alert(total)
+      }
+    },
+    {
+      type: "subtract()",
+      name: "subtract()" ,
+      parameters: [],
+      definition: "  var total = 0;\n  for (var i = 0; i < arguments.length; i++) {\n    total -= arguments[i];\n    }\n  return total;\n",
+      addParam: function(data) {
+        this.parameters.push(data.value);
+        $scope.code = generateCode($scope.droppedCodeBlocks);
+      },
+      execute: function () {
+        var total = this.parameters[0];
+        for(var i = 1; i < this.parameters.length; i++) {
+          total -= Number(this.parameters[i]);
+        }
+        alert(total)
+      }
+    },
+    {
+      type: "multiply()",
+      name: "subtract()" ,
+      parameters: [],
+      definition: "  var total = 0;\n  for (var i = 0; i < arguments.length; i++) {\n    total -= arguments[i];\n    }\n  return total;\n",
+      addParam: function(data) {
+        this.parameters.push(data.value);
+        $scope.code = generateCode($scope.droppedCodeBlocks);
+      },
+      execute: function () {
+        var total = this.parameters[0];
+        for(var i = 1; i < this.parameters.length; i++) {
+          total -= Number(this.parameters[i]);
+        }
+        alert(total)
+      }
+    },
+    {
+      type: "divide()",
+      name: "subtract()" ,
+      parameters: [],
+      definition: "var total = 0;\nfor (var i = 0; i < arguments.length; i++) {\n  total -= arguments[i];\n  }\nreturn total;\n",
+      addParam: function(data) {
+        this.parameters.push(data.value);
+        $scope.code = generateCode($scope.droppedCodeBlocks);
+      },
+      execute: function () {
+        var total = this.parameters[0];
+        for(var i = 1; i < this.parameters.length; i++) {
+          total -= Number(this.parameters[i]);
+        }
         alert(total)
       }
     }
   ];
+
+  // OICE
+  // Communication out loud
+  // Do Toy Problems on Whiteboard
+  // Find interview Questions on Student Wiki and practice out loud
+  // If you freeze, switch it up. Step back and look at the big picture, or try simpler cases
 
   // stores the codeblocks dropped in canvas
   $scope.droppedCodeBlocks = [];
