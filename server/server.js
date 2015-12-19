@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
+var socketConfig = require('./socket-config');
 var io = require('socket.io')(http);
 
 var db = require('./database/dbsetup.js');
@@ -14,20 +15,12 @@ var controller = require('./database/controllers.js');
 
 app.use(express.static(__dirname + '/../app'));
 
-// SOCKETS =======================================
+var usernames = {}; 
+var rooms = ['room1', 'room2', 'room3']; 
+
+// SOCKET LISTENERS =======================================
 io.sockets.on('connection', function(socket) {
-  socket.on('canvasChange', function(data) {
-    socket.broadcast.emit('onCanvasChange', data);
-  });
-  // var lastPosition = null; 
-  // socket.broadcast.emit('upDatePosition', lastPosition);
-  socket.on('changePosition', function(data) {
-    // lastPosition = data; 
-    socket.broadcast.emit('updatePosition', data);
-  }); 
-  socket.on('addMessage', function(data) {
-    socket.emit('onMessageAdded', data); 
-  }); 
+  socketConfig(socket);
 });
 
 // API ============================================

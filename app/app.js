@@ -4,11 +4,10 @@
 angular.module('Grasp', [
   'Grasp.Canvas',
   'Grasp.Auth',
-  // 'Grasp.chat',
+  'Grasp.chat',
   'Canvas.socket',
   'ngRoute',
-  'ngMaterial',
-  'Grasp.Choice'
+  'ngMaterial'
 ])
 .config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
   $routeProvider

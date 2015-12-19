@@ -46,14 +46,14 @@ module.exports = {
     // check to see if that user exists in the database
         var token = request.headers['x-access-token'];
         if (!token) {
-          console.log("in error")
+          console.log("in error");
           var err = new Error("failed");
           callback(err, null);
         } else {
           var user = jwt.decode(token, 'secret');
           db('users').where('username', user)
           .then(function (res) {
-            console.log("success")
+            console.log("success"); 
             callback(null, res)
           })
           .catch(function (res) {
