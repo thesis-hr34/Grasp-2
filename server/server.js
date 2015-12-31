@@ -5,8 +5,6 @@ var http = require('http').Server(app);
 // Sockets & RabbitMQ
 var socketConfig = require('./socket-config');
 var io = require('socket.io')(http);
-// var amqp = require('amqp');
-// var rabbitMQ = amqp.createConnection({host: 'localhost'});
 
 // Database
 var db = require('./database/dbsetup.js');

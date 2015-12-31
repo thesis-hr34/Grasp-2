@@ -77,7 +77,7 @@
   </div>
   <div class="top-menu">
     <ul class="nav pull-right top-menu">
-      <li><a class="logout" ng-click="logout()">Logout</a></li>
+      <li><a ng-controller="AuthCTRL" class="logout" ng-click="signout()">Logout</a></li>
     </ul>
   </div>
 </header>
@@ -94,7 +94,7 @@
           <div ng-repeat="codeBlock in codeBlocks">
 
               <!-- CODEBLOCK start -->
-              <div class="toolboxBlock" ng-drag="true">
+              <div id="{{codeBlock.generateUniqueID()}}" class="toolboxBlock" ng-drop="true" ng-drag="true" ng-drag-move="blockIsMoving($event, $data)" ng-drag-success="blockIsDoneMoving($event, $data)" ng-drag-data="codeBlock">
 
                 <div>{{codeBlock.type}}</div>
                
@@ -107,6 +107,14 @@
   <!--TOOLBOX end-->
 
 
+/*
+  1 - Complete drop down menu of blocks
+    a) Edit
+    b) Delete
+    c) Info
+    d) Native Methods
+*/
+
   <!-- CANVAS start -->
   <div class="canvasArea" id="main-content">
 
@@ -114,15 +122,15 @@
     <div ng-repeat="row in blockMatrix">
 
       <!-- a row -->
-      <div class="canvasRow" ng-drop="true" ng-drop-success="onCanvasDrop($data, row)">
+      <div class="canvasRow" ng-drop="isCanvasDroppable" ng-drop-success="onCanvasDrop($data, row)">
 
         <!-- ng-repeat container of row -->
         <div ng-repeat="canvasBlock in row track by $index">
 
           <!-- a code block -->
           <div class="canvasBlock">
-            <div id="canvasBlockTag" ng-click="showDropDownMenu = showDropDownMenu ? false : true">#</div>
-            <div id="canvasBlockName">asdfasd</div>
+            <div id="canvasBlockTag" ng-click="showDropDownMenu = showDropDownMenu ? false : true">{{canvasBlock.tag}}</div>
+            <div id="canvasBlockName">{{canvasBlock.name}}</div>
             
             <!-- drop down menu of code block -->
             <div id="dropDownMenu" ng-if="showDropDownMenu">
@@ -150,6 +158,10 @@
   </div>
   <!--CANVAS END-->
 
+  <!-- CODE AREA start -->
+  <div class="codeArea">
+    dsfasdfdsfadsf
+  </div>
+  <!-- CODE AREA end -->
+
 </section>
-
-

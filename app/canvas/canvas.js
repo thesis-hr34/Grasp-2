@@ -1,7 +1,6 @@
 angular.module('Grasp.Canvas', ['Canvas.socket', 'ngDraggable', 'ngRoute', 'ngPopup'])
 
 .controller('CanvasCTRL', function ($scope, socket, CanvasFactory) {
-  $scope.isCanvasDraggable = false;
   $scope.isCanvasDroppable = true;
 
   // code generated from the combination of blocks on canvas
@@ -19,28 +18,62 @@ angular.module('Grasp.Canvas', ['Canvas.socket', 'ngDraggable', 'ngRoute', 'ngPo
     row.splice(index, 1);
   }
 
-  // edite a block's attributes
-  $scope.editBlock = function() {
-    
-  }
-
   // handles any drop events on canvas
   $scope.onCanvasDrop = function(codeBlock, row) {
     // add codeBlock at row
+    
     row.push(codeBlock);
-
-    // remove any empty rows to avoid wasted space in the matrix
-    // for (var i = $scope.blockMatrix.length-1; i >= 0; i--) {
-    //   if ($scope.blockMatrix[i].length === 0) {
-    //     $scope.blockMatrix.splice(i, 1);
-    //   }
-    // }
 
     // add an extra empty row to the matrix if last row contains a codeBlock
     if ($scope.blockMatrix[$scope.blockMatrix.length-1].length > 0) {
       $scope.blockMatrix.push([]);
     }
+
+    // emit block matrix to update other user's matrix
+    socket.emit('canvasChange', $scope.blockMatrix);
   };
+
+  // handles drag movements, this is where we emit x and y positions
+  $scope.blockIsMoving = function(event, codeBlock) {
+    var id = codeBlock.generateUniqueID();
+    var obj = {
+      isDragging: true,
+      position: {x:event.tx, y:event.ty},
+      id: id
+    }; 
+    socket.emit('changePosition', obj);
+  };
+
+  $scope.blockIsDoneMoving = function(event, codeBlock) {
+    var id = codeBlock.generateUniqueID();
+    var obj = {
+      isDragging: false,
+      position: {x:event.tx, y:event.ty},
+      id: id
+    }; 
+    socket.emit('changePosition', obj);
+  }
+
+  // ------------- SOCKET HANDLERS -------------
+  // update blockMatrix when changes are made to it
+  socket.on('onCanvasChange', function(data) {
+    $scope.blockMatrix = data;
+  });
+
+  // update current position of block that's being dragged
+  socket.on('updatePosition', function(data) {
+    var element = angular.element(document.getElementById(data.id));
+    if (data.isDragging) {
+      element.css({
+        transform: 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, ' + data.position.x + ', ' + data.position.y + ', 0, 1)',
+        'z-index': 99999,
+        '-webkit-transform': 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, ' + data.position.x + ', ' + data.position.y + ', 0, 1)',
+        '-ms-transform': 'matrix(1, 0, 0, 1, ' + data.position.x + ', ' + data.position.y + ')'
+      });
+    } else {
+      element.css({transform:'', 'z-index':'', '-webkit-transform':'', '-ms-transform':''});
+    }
+  });
 
 })
 
@@ -52,30 +85,46 @@ angular.module('Grasp.Canvas', ['Canvas.socket', 'ngDraggable', 'ngRoute', 'ngPo
                         type: 'number',
                         tag: '#',
                         name: 'no-name-number',
-                        content: 0
+                        content: 0,
+                        generateUniqueID: function() {
+                          return this.name + this.content + "";
+                        }
                       },
                       {
                         type: 'string',
                         tag: '~',
                         name: 'no-name-string',
-                        content: '-- empty string --'
+                        content: '-- empty string --',
+                        generateUniqueID: function() {
+                          return this.name + this.content + "";
+                        }
                       },
                       {
                         type: 'array',
                         tag: '[]',
                         name: 'no-name-array',
-                        content: []
+                        content: [],
+                        generateUniqueID: function() {
+                          return this.name + this.content + "";
+                        }
                       },
                       {
                         type: 'object',
                         tag: '{}',
                         name: 'no-name-object',
-                        content: {}
+                        content: {},
+                        generateUniqueID: function() {
+                          return this.name + this.content + "";
+                        }
                       },
                       {
                         type: 'loop',
                         tag: 'O',
                         name: 'loop',
+                        content: [[],[],[],[],[]],
+                        generateUniqueID: function() {
+                          return this.name + this.content + "";
+                        }
                       }
                    ];
 

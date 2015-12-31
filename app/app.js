@@ -14,8 +14,8 @@ angular.module('Grasp', [
   $routeProvider
     .when('/canvas', {
       templateUrl: 'canvas/canvas.html',
-      controller: 'CanvasCTRL'
-      // authenticate: true
+      controller: 'CanvasCTRL',
+      authenticate: true
     })
     .when('/signin', {
       templateUrl: 'auth/signin.html',

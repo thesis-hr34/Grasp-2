@@ -109,7 +109,7 @@ angular.module('Grasp.Auth', ['ngRoute'])
     signout: signout,
     loggedIn: loggedIn
   };
+})
+.run(function ($rootScope, $location, Auth){
+  Auth.loggedIn();
 });
-// .run(function ($rootScope, $location, Auth){
-//   Auth.loggedIn();
-// });

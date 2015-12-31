@@ -1,5 +1,4 @@
 //sets up database connection
-console.log(module.exports.host)
 
 if (process.env.database === undefined) {
   var dbstuff = require('../../dbstuff.js')
