@@ -1,5 +1,6 @@
-angular.module('Grasp.LandingPage', ['ngDraggable', 'ngRoute'])
+angular.module('Grasp.LandingPage', ['ngRoute'])
 
 .controller('LandingPageCTRL', function ($scope) {
   
-})
+}); 
+

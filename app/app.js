@@ -6,9 +6,11 @@ angular.module('Grasp', [
   'Grasp.Auth',
   'Grasp.chat',
   'Grasp.header',
+  'Grasp.LandingPage',
   'Canvas.socket',
   'ngRoute',
-  'ngPopup'
+  'ngPopup',
+  'routeStyles'
 ])
 .config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
   $routeProvider
@@ -27,7 +29,8 @@ angular.module('Grasp', [
     })
     .when('/welcome', {
       templateUrl: 'landingPage/landingPage.html',
-      controller: 'LandingPageCTRL'
+      controller: 'LandingPageCTRL',
+      css: 'css/landing.css'
     })
     .otherwise({redirectTo: '/canvas'});
     $httpProvider.interceptors.push('AttachTokens');
