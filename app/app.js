@@ -32,7 +32,7 @@ angular.module('Grasp', [
       controller: 'LandingPageCTRL',
       css: 'css/landing.css'
     })
-    .otherwise({redirectTo: '/canvas'});
+    .otherwise({redirectTo: '/welcome'});
     $httpProvider.interceptors.push('AttachTokens');
 }])
 .factory('AttachTokens', function ($window) {

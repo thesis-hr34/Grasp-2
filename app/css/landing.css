@@ -163,19 +163,12 @@ a:after {
 }
 
 #graspIMG {
-  height: 150px;
-  top: 85px;
-    margin: 0;
-    position: relative;
-    z-index: 9999;
-    text-align: center;
-    left: 50%;
-   margin-right: -50%;
-  transform: translate(-50%, -50%)
+  height: 200px;
+  margin-top: 95px;
 }
 
 #brandName {
-  top: 150px;
+  margin-top: -70px;
 }
 /* Dark Grey Wrap */
 #dg {
