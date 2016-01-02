@@ -351,9 +351,9 @@
 }
 
 #screenshotIMG {
-  z-index: 0;
-  left: 0px;
-  top: 85px;
-  position: absolute;
+  top: 20px;
+  position: fixed;
+  height: 100%;
+  width: 100%;
   opacity: 0.1;
 }
