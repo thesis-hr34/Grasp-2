@@ -15,10 +15,10 @@
       <!-- settings start -->
       <li class="dropdown" id="teacherConnect" uib-dropdown>
         <a ng-if="isTeacher" class="dropdown-toggle" ng-click="leave()">
-          <i class="fa fa-tasks"></i><div>DISCONNECT AS TEACHER</div>
+          <i class="fa fa-tasks"></i><div style="float: right;">DISCONNECT AS TEACHER</div>
         </a>
-        <a ng-if="!isTeacher && !isStudent" uib-dropdown-toggle class="dropdown-toggle" href="#">
-          <i class="fa fa-tasks"></i><div>CONNECT AS TEACHER</div>
+        <a ng-if="!isTeacher && !isStudent" uib-dropdown-toggle class="dropdown-toggle" href="#" style="margin-top:15px">
+          <i class="fa fa-tasks"></i><div style="float: right;margin-left: 10px;">CONNECT AS TEACHER</div>
           <span class="badge bg-theme">{{numberOfTeachers}}</span>
         </a>
           <ul class="dropdown-menu extended tasks-bar">
@@ -47,10 +47,10 @@
       <!-- settings end -->
       <li class="dropdown"  id="studentConnect" uib-dropdown>
       <a ng-if="isStudent" class="dropdown-toggle" ng-click="leave()">
-        <i class="fa fa-tasks"></i><div>DISCONNECT AS STUDENT</div>
+        <i class="fa fa-tasks"></i><div style="float: right; margin-left: 10px;">DISCONNECT AS STUDENT</div>
       </a>
-        <a ng-if="!isTeacher && !isStudent" uib-dropdown-toggle class="dropdown-toggle" href="#">
-          <i class="fa fa-tasks"></i><div>CONNECT AS STUDENT</div>
+        <a ng-if="!isTeacher && !isStudent" uib-dropdown-toggle class="dropdown-toggle" href="#" style="margin-top:15px">
+          <i class="fa fa-tasks"></i><div style="float: right; margin-left: 10px;">CONNECT AS STUDENT</div>
           <span class="badge bg-theme">{{numberOfStudents}}</span>
         </a>
           <ul class="dropdown-menu extended tasks-bar">
@@ -81,7 +81,7 @@
         <!--  notification end -->
   </div>
   <div class="top-menu">
-    <ul class="nav pull-right top-menu">
+    <ul class="nav pull-right top-menu"style="margin-top: -4px;">
       <li><a ng-controller="AuthCTRL" id="logout" ng-click="signout()">Logout</a></li>
     </ul>
   </div>

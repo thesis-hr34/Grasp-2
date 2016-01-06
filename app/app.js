@@ -32,6 +32,11 @@ angular.module('Grasp', [
       controller: 'LandingPageCTRL',
       css: 'css/landing.css'
     })
+    .when('/about', {
+      templateUrl: 'about/about.html',
+      controller: 'LandingPageCTRL',
+      css: 'css/landing.css'
+    })
     .otherwise({redirectTo: '/welcome'});
     $httpProvider.interceptors.push('AttachTokens');
 }])
