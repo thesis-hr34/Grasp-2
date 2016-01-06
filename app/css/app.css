@@ -316,6 +316,10 @@
   background-color: #ffd777;
 }
 
+#con {
+  font-size: 10px
+}
+
 #lightIMG {
   height: 250px;
 }
